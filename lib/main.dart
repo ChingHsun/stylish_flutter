@@ -1,59 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:stylish_flutter/components/BannerCard.dart';
-import 'package:stylish_flutter/components/ProductList.dart';
+import 'package:provider/provider.dart';
+import 'package:stylish_flutter/class/category.dart';
+import 'package:stylish_flutter/class/product.dart';
+import 'package:stylish_flutter/pages/home_page.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(const App());
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    const title = 'Horizontal List';
-
-    return MaterialApp(
-      title: title,
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.grey,
-          title: Image.asset(
-            'images/logo.png',
-            width: 150,
-            fit: BoxFit.cover,
-          ),
-        ),
-        body: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 20.0),
-              height: 200.0,
-              child: ListView(
-                // This next line does the trick.
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  BannerCard(),
-                  BannerCard(),
-                  BannerCard(),
-                  BannerCard(),
-                  BannerCard(),
-                  BannerCard(),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: (Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Expanded(child: ProductList()),
-                  Expanded(child: ProductList()),
-                  Expanded(child: ProductList()),
-                ],
-              )),
-            )
-          ],
-        ),
+    return ChangeNotifierProvider(
+      create: (context) => AppState(),
+      child: MaterialApp(
+        title: 'Stylish',
+        home: HomePage(),
       ),
     );
   }
+}
+
+class AppState extends ChangeNotifier {
+  final List<Product> hotProducts = List<Product>.generate(
+      6, (i) => Product("UNIQLO 特級極輕羽絨外套", 323, "images/placeholder.png"),
+      growable: false);
+
+  final List<Category> categories = [
+    Category(
+        '女裝',
+        List<Product>.generate(12,
+            (i) => Product("UNIQLO 特級極輕羽絨外套", 323, "images/placeholder.png"),
+            growable: false)),
+    Category(
+        '男裝',
+        List<Product>.generate(12,
+            (i) => Product("UNIQLO 特級極輕羽絨外套", 323, "images/placeholder.png"),
+            growable: false)),
+    Category(
+        '配飾',
+        List<Product>.generate(12,
+            (i) => Product("UNIQLO 特級極輕羽絨外套", 323, "images/placeholder.png"),
+            growable: false)),
+  ];
 }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:stylish_flutter/class/product.dart';
 
 class BannerCard extends StatelessWidget {
-  const BannerCard({
-    super.key,
-  });
+  final Product product;
+
+  BannerCard(this.product, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class BannerCard extends StatelessWidget {
       color: Colors.grey,
       margin: EdgeInsets.all(10),
       child: Image.asset(
-        'images/placeholder.png',
+        product.image,
         fit: BoxFit.fill,
       ),
     );

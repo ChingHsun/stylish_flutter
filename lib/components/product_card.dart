@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:stylish_flutter/class/product.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({
-    super.key,
-  });
+  final Product product;
+
+  ProductCard(this.product, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Card(
         child: Row(children: <Widget>[
       Image.asset(
-        'images/placeholder.png',
+        product.image,
         width: 100,
         height: 150,
         fit: BoxFit.fill,
@@ -20,9 +21,9 @@ class ProductCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('UNIQLO 特級極輕羽絨外套'),
+            Text(product.name),
             SizedBox(height: 8.0),
-            Text('NT\$ 323'),
+            Text('NT\$ ${product.price}'),
           ],
         ),
       ),
