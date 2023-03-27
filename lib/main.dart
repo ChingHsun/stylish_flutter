@@ -13,7 +13,12 @@ class MyApp extends StatelessWidget {
       title: title,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text(title),
+          backgroundColor: Colors.grey,
+          title: Image.asset(
+            'images/logo.png',
+            width: 150,
+            fit: BoxFit.cover,
+          ),
         ),
         body: Container(
           margin: const EdgeInsets.symmetric(vertical: 20.0),
