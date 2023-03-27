@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stylish_flutter/components/BannerCard.dart';
 
 void main() => runApp(const MyApp());
 
@@ -27,26 +28,13 @@ class MyApp extends StatelessWidget {
             // This next line does the trick.
             scrollDirection: Axis.horizontal,
             children: <Widget>[
-              Container(
-                width: 160.0,
-                color: Colors.red,
-              ),
-              Container(
-                width: 160.0,
-                color: Colors.blue,
-              ),
-              Container(
-                width: 160.0,
-                color: Colors.green,
-              ),
-              Container(
-                width: 160.0,
-                color: Colors.yellow,
-              ),
-              Container(
-                width: 160.0,
-                color: Colors.orange,
-              ),
+              BannerCard(),
+              BannerCard(),
+              BannerCard(),
+              BannerCard(),
+              BannerCard(),
+              BannerCard(),
+              BannerCard(),
             ],
           ),
         ),
