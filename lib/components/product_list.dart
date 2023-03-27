@@ -9,9 +9,17 @@ class ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(children: <Widget>[
-      Text(category.name),
-      ...category.products.map((product) => ProductCard(product)).toList(),
-    ]);
+    return Column(
+      children: [
+        SizedBox(height: 30),
+        Text(category.name),
+        Expanded(
+          child: ListView(
+              children: category.products
+                  .map((product) => ProductCard(product))
+                  .toList()),
+        ),
+      ],
+    );
   }
 }

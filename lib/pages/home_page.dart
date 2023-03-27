@@ -11,6 +11,10 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
     var categories = appState.categories;
+    var hotProducts = appState.hotProducts;
+
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 766;
 
     return MaterialApp(
       title: 'HomePage',
@@ -23,34 +27,41 @@ class HomePage extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        body: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 20.0),
-              height: 200.0,
-              child: ListView(
-                // This next line does the trick.
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  BannerCard(),
-                  BannerCard(),
-                  BannerCard(),
-                  BannerCard(),
-                  BannerCard(),
-                  BannerCard(),
-                ],
+        body: SafeArea(
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 20.0),
+                height: 200.0,
+                child: ListView(
+                  // This next line does the trick.
+                  scrollDirection: Axis.horizontal,
+                  children: hotProducts
+                      .map((product) => BannerCard(product))
+                      .toList(),
+                ),
               ),
-            ),
-            Expanded(
-              flex: 1,
-              child: (Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: categories
-                    .map((category) => Expanded(child: ProductList(category)))
-                    .toList(),
-              )),
-            )
-          ],
+              isSmallScreen
+                  ? Expanded(
+                      child: ListView(
+                        children: categories
+                            .map((category) => SizedBox(
+                                height: 300, child: ProductList(category)))
+                            .toList(),
+                      ),
+                    )
+                  : Expanded(
+                      flex: 1,
+                      child: (Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: categories
+                            .map((category) =>
+                                Expanded(child: ProductList(category)))
+                            .toList(),
+                      )),
+                    )
+            ],
+          ),
         ),
       ),
     );
