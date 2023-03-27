@@ -9,24 +9,31 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        child: Row(children: <Widget>[
-      Image.asset(
-        product.image,
-        width: 100,
-        height: 150,
-        fit: BoxFit.fill,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset(
+            product.image,
+            width: 100,
+            height: 150,
+            fit: BoxFit.fill,
+          ),
+          SizedBox(width: 8.0),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(product.name),
+                  SizedBox(height: 8.0),
+                  Text('NT\$ ${product.price}'),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(product.name),
-            SizedBox(height: 8.0),
-            Text('NT\$ ${product.price}'),
-          ],
-        ),
-      ),
-    ]));
+    );
   }
 }
