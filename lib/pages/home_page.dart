@@ -21,6 +21,7 @@ class HomePage extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.grey,
+          centerTitle: true,
           title: Image.asset(
             'images/logo.png',
             width: 150,
