@@ -11,6 +11,7 @@ void main() => runApp(const App());
 final GoRouter _router = GoRouter(
   routes: <RouteBase>[
     GoRoute(
+      name: 'home',
       path: '/',
       builder: (context, state) => const HomePage(),
       routes: <RouteBase>[

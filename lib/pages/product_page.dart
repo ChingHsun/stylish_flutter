@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ProductPage extends StatelessWidget {
   final String? productId;
@@ -13,10 +14,16 @@ class ProductPage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.grey,
           centerTitle: true,
-          title: Image.asset(
-            'images/logo.png',
-            width: 150,
-            fit: BoxFit.cover,
+          title: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: () => context.goNamed('home'),
+              child: Image.asset(
+                'images/logo.png',
+                width: 150,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
         ),
         body: SafeArea(child: Text('test')),
