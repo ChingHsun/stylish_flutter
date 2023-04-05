@@ -1,24 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:stylish_flutter/components/color_selector.dart';
 import 'package:stylish_flutter/components/count_button.dart';
 import 'package:stylish_flutter/components/size_selector.dart';
 import 'package:stylish_flutter/components/vertical_line.dart';
+import 'package:stylish_flutter/main.dart';
+import 'package:stylish_flutter/type.dart';
 
 class ProductPage extends StatefulWidget {
   final String? productId;
+  final Product product;
+  String? selectedCode;
+  String? selectedSize;
 
-  ProductPage({super.key, this.productId});
+  ProductPage({super.key, this.productId, required this.product});
 
   @override
   State<ProductPage> createState() => _ProductPage();
 }
 
 class _ProductPage extends State<ProductPage> {
-  bool _isSelected = false;
-
   @override
   Widget build(BuildContext context) {
+    var appState = context.watch<AppState>();
+
+    final product = widget.product;
+
     return MaterialApp(
       title: 'ProductPage',
       home: Scaffold(
@@ -29,7 +37,7 @@ class _ProductPage extends State<ProductPage> {
             cursor: SystemMouseCursors.click,
             child: GestureDetector(
               onTap: () => context.goNamed('home'),
-              child: Image.asset(
+              child: Image.network(
                 'images/logo.png',
                 width: 150,
                 fit: BoxFit.cover,
@@ -48,41 +56,36 @@ class _ProductPage extends State<ProductPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Image.asset(
-                      'images/placeholder.png',
+                    Image.network(
+                      product.mainImage,
                       fit: BoxFit.fill,
                     ),
                     Text(
-                      '產品名稱',
+                      product.title,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text('產品 id'),
+                    Text(product.title),
                     SizedBox(
                       height: 10,
                     ),
-                    Text('NT\$ 322'),
+                    Text('NT\$ $product.price.toString()'),
                     Divider(),
                     Row(
                       children: [
                         Text('顏色'),
                         VerticalLine(),
-                        ColorSelector(
-                          isSelected: _isSelected,
-                          onTap: () {
-                            setState(() {
-                              _isSelected = !_isSelected;
-                            });
-                          },
-                        ),
-                        ColorSelector(
-                          isSelected: _isSelected,
-                          onTap: () {
-                            setState(() {
-                              _isSelected = !_isSelected;
-                            });
-                          },
+                        ...product.colors.map(
+                          (color) => ColorSelector(
+                            color: color,
+                            isSelected: widget.selectedCode == color.code,
+                            onTap: (colorCode) {
+                              setState(() {
+                                widget.selectedCode = colorCode;
+                              });
+                            },
+                          ),
                         )
                       ],
                     ),
@@ -90,21 +93,16 @@ class _ProductPage extends State<ProductPage> {
                       children: [
                         Text('尺寸'),
                         VerticalLine(),
-                        SizeSelector(
-                          isSelected: _isSelected,
-                          onTap: () {
-                            setState(() {
-                              _isSelected = !_isSelected;
-                            });
-                          },
-                        ),
-                        SizeSelector(
-                          isSelected: _isSelected,
-                          onTap: () {
-                            setState(() {
-                              _isSelected = !_isSelected;
-                            });
-                          },
+                        ...product.sizes.map(
+                          (size) => SizeSelector(
+                            size: size,
+                            isSelected: widget.selectedSize == size,
+                            onTap: (size) {
+                              setState(() {
+                                widget.selectedSize = size;
+                              });
+                            },
+                          ),
                         )
                       ],
                     ),
@@ -112,60 +110,37 @@ class _ProductPage extends State<ProductPage> {
                       children: [
                         Text('數量'),
                         VerticalLine(),
-                        CountButton(
-                          isSelected: _isSelected,
-                          onTap: () {
-                            setState(() {
-                              _isSelected = !_isSelected;
-                            });
-                          },
-                        ),
-                        Text('1'),
-                        CountButton(
-                          isSelected: _isSelected,
-                          onTap: () {
-                            setState(() {
-                              _isSelected = !_isSelected;
-                            });
-                          },
-                        )
+                        CountButton(),
                       ],
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
+                    MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                        ),
+                        padding: const EdgeInsets.all(10),
+                        child: Text('請選擇尺寸'),
                       ),
-                      padding: const EdgeInsets.all(10),
-                      child: Text('請選擇尺寸'),
                     ),
-                    Wrap(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
-                        Text(
-                            'Suspendisse vel placerat lacus, et porttitor urna.'),
-                        Text(
-                            'Morbi consequat erat quis risus ullamcorper tristique.'),
-                        Text(
-                            'Nullam tincidunt orci a odio laoreet, in aliquam lorem facilisis.'),
-                        Text(
-                            'Fusce convallis mi ac ante finibus, eget eleifend risus porttitor.'),
+                          '實品顏色依單品照為主',
+                        ),
+                        Text(product.texture),
+                        Text(product.wash),
+                        Text('加工產地 $product.place'),
                       ],
                     ),
                     Text('細部說明'),
-                    Text(
-                        'This text is very very very very very very very very very very very very very very very very very very very very very very very very very long'),
+                    Text(product.story),
                     Wrap(
                       spacing: 8.0, // 每個元素之間的水平間距
                       runSpacing: 4.0, // 每行之間的垂直間距
-                      children: [
-                        Image.asset('images/placeholder.png'),
-                        Image.asset('images/placeholder.png'),
-                        Image.asset('images/placeholder.png'),
-                        Image.asset('images/placeholder.png'),
-                        Image.asset('images/placeholder.png'),
-                        Image.asset('images/placeholder.png'),
-                      ],
+                      children:
+                          product.images.map((i) => Image.network(i)).toList(),
                     )
                   ],
                 ),

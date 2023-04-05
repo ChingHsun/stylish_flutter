@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:stylish_flutter/class/product.dart';
+import 'package:stylish_flutter/type.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -12,14 +12,17 @@ class ProductCard extends StatelessWidget {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: () =>
-            context.goNamed('product', params: {'productId': product.id}),
+        onTap: () => context.goNamed('product',
+            params: {
+              'productId': product.id,
+            },
+            extra: product),
         child: Card(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(
-                product.image,
+              Image.network(
+                product.mainImage,
                 width: 100,
                 height: 150,
                 fit: BoxFit.fill,
@@ -31,7 +34,7 @@ class ProductCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(product.name),
+                      Text(product.title),
                       SizedBox(height: 8.0),
                       Text('NT\$ ${product.price}'),
                     ],

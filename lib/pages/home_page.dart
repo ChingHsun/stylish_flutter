@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:stylish_flutter/components/banner_card.dart';
 import 'package:stylish_flutter/components/product_list.dart';
-import 'package:stylish_flutter/main.dart';
+import 'package:stylish_flutter/constants.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<AppState>();
-    var categories = appState.categories;
-    var hotProducts = appState.hotProducts;
-
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 766;
 
@@ -22,7 +17,7 @@ class HomePage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.grey,
           centerTitle: true,
-          title: Image.asset(
+          title: Image.network(
             'images/logo.png',
             width: 150,
             fit: BoxFit.cover,

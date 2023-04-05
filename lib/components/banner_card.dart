@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:stylish_flutter/class/product.dart';
+import 'package:stylish_flutter/type.dart';
 
 class BannerCard extends StatelessWidget {
   final Product product;
@@ -23,8 +23,8 @@ class BannerCard extends StatelessWidget {
           elevation: 5,
           color: Colors.grey,
           margin: EdgeInsets.all(10),
-          child: Image.asset(
-            product.image,
+          child: Image.network(
+            product.images[0],
             fit: BoxFit.fill,
           ),
         ),

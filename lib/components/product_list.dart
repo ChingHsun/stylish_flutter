@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stylish_flutter/class/category.dart';
 import 'package:stylish_flutter/components/product_card.dart';
+import 'package:stylish_flutter/type.dart';
 
 class ProductList extends StatelessWidget {
   final Category category;
