@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:stylish_flutter/components/color_selector.dart';
 import 'package:stylish_flutter/components/count_button.dart';
 import 'package:stylish_flutter/components/size_selector.dart';
 import 'package:stylish_flutter/components/vertical_line.dart';
-import 'package:stylish_flutter/main.dart';
 import 'package:stylish_flutter/type.dart';
 
 class ProductPage extends StatefulWidget {
@@ -23,8 +21,6 @@ class ProductPage extends StatefulWidget {
 class _ProductPage extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<AppState>();
-
     final product = widget.product;
 
     return MaterialApp(
