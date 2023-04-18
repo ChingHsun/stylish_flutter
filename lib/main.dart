@@ -13,7 +13,7 @@ final GoRouter _router = GoRouter(
     GoRoute(
       name: 'home',
       path: '/',
-      builder: (context, state) => const HomePage(),
+      builder: (context, state) => HomePage(),
       routes: <RouteBase>[
         GoRoute(
           name: 'product',
@@ -24,7 +24,6 @@ final GoRouter _router = GoRouter(
               return ProductPage(
                   productId: productId,
                   product: products.firstWhere((p) => p.id == productId));
-              ;
             } else {
               return ProductPage(
                   productId: state.params['productId']!,
