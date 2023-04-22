@@ -33,7 +33,7 @@ class _ProductPage extends State<ProductPage> {
             cursor: SystemMouseCursors.click,
             child: GestureDetector(
               onTap: () => context.goNamed('home'),
-              child: Image.network(
+              child: Image.asset(
                 'images/logo.png',
                 width: 150,
                 fit: BoxFit.cover,

@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.grey,
           centerTitle: true,
-          title: Image.network(
+          title: Image.asset(
             'images/logo.png',
             width: 150,
             fit: BoxFit.cover,
