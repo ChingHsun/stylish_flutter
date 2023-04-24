@@ -2,9 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:stylish_flutter/components/banner_card.dart';
 import 'package:stylish_flutter/components/product_list.dart';
 import 'package:stylish_flutter/constants.dart';
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+  // Get battery level.
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  // Get battery level.
+  String _batteryLevel = 'Unknown battery level.';
+
+  Future<void> _getBatteryLevel() async {
+    print('click');
+
+    const platform = MethodChannel('samples.flutter.dev/battery');
+    String batteryLevel;
+    try {
+      final String result = await platform.invokeMethod('getBatteryLevel');
+      print(result);
+      batteryLevel = result;
+    } on PlatformException catch (e) {
+      batteryLevel = "Failed: '${e.message}'.";
+    }
+
+    setState(() {
+      _batteryLevel = batteryLevel;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +56,18 @@ class HomePage extends StatelessWidget {
         body: SafeArea(
           child: Column(
             children: [
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: _getBatteryLevel,
+                      child: const Text('Get Battery Level'),
+                    ),
+                    Text(_batteryLevel),
+                  ],
+                ),
+              ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 20.0),
                 height: 200.0,
