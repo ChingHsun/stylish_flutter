@@ -1,11 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.stylish_flutter">
-		 <meta-data android:name="com.example.stylish_flutter.API_KEY"
-               android:value="AIzaSyCOobsqPON-yvWy9oluuKb9r-XEU3AokfI"/>
+		
    <application
         android:label="stylish_flutter"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+				 <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyCOobsqPON-yvWy9oluuKb9r-XEU3AokfI"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
