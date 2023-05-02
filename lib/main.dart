@@ -1,55 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:stylish_flutter/constants.dart';
-import 'package:stylish_flutter/pages/home_page.dart';
-import 'package:stylish_flutter/pages/product_page.dart';
-import 'package:stylish_flutter/type.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-void main() => runApp(const App());
+void main() => runApp(const MyApp());
 
-final GoRouter _router = GoRouter(
-  routes: <RouteBase>[
-    GoRoute(
-      name: 'home',
-      path: '/',
-      builder: (context, state) => const HomePage(),
-      routes: <RouteBase>[
-        GoRoute(
-          name: 'product',
-          path: 'product/:productId',
-          builder: (context, state) {
-            if (state.extra == null) {
-              final productId = state.params['productId']!;
-              return ProductPage(
-                  productId: productId,
-                  product: products.firstWhere((p) => p.id == productId));
-              ;
-            } else {
-              return ProductPage(
-                  productId: state.params['productId']!,
-                  product: state.extra as Product);
-            }
-          },
-        )
-      ],
-    ),
-  ],
-);
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
-class App extends StatelessWidget {
-  const App({super.key});
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late GoogleMapController mapController;
+
+  final LatLng _center = const LatLng(45.521563, -122.677433);
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AppState(),
-      child: MaterialApp.router(
-        title: 'Stylish',
-        routerConfig: _router,
+    return MaterialApp(
+      theme: ThemeData(
+        useMaterial3: true,
+        colorSchemeSeed: Colors.green[700],
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Maps Sample App'),
+          elevation: 2,
+        ),
+        body: GoogleMap(
+          onMapCreated: _onMapCreated,
+          initialCameraPosition: CameraPosition(
+            target: _center,
+            zoom: 11.0,
+          ),
+        ),
       ),
     );
   }
 }
-
-class AppState extends ChangeNotifier {}
