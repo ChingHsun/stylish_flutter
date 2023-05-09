@@ -21,6 +21,8 @@ dependencies:
   google_maps_flutter_web: ^0.4.0+8
   envied: ^0.3.0
   google_maps_flutter: ^2.2.5
+  flutter_webrtc: ^0.9.29+hotfix.1
+  sdp_transform: ^0.3.2
 
 dev_dependencies:
   flutter_test:
