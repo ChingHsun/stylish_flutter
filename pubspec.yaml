@@ -18,6 +18,7 @@ dependencies:
   flutter_bloc: ^8.0.0
   dio: ^5.1.1
   cached_network_image: ^3.2.3
+  arkit_plugin: ^1.0.6
 
 dev_dependencies:
   flutter_test:

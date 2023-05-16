@@ -1,55 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:stylish_flutter/constants.dart';
-import 'package:stylish_flutter/pages/home_page.dart';
-import 'package:stylish_flutter/pages/product_page.dart';
-import 'package:stylish_flutter/type.dart';
+import 'package:arkit_plugin/arkit_plugin.dart';
+import 'package:vector_math/vector_math_64.dart';
 
-void main() => runApp(const App());
+void main() => runApp(MaterialApp(home: MyApp()));
 
-final GoRouter _router = GoRouter(
-  routes: <RouteBase>[
-    GoRoute(
-      name: 'home',
-      path: '/',
-      builder: (context, state) => const HomePage(),
-      routes: <RouteBase>[
-        GoRoute(
-          name: 'product',
-          path: 'product/:productId',
-          builder: (context, state) {
-            if (state.extra == null) {
-              final productId = state.params['productId']!;
-              return ProductPage(
-                  productId: productId,
-                  product: products.firstWhere((p) => p.id == productId));
-              ;
-            } else {
-              return ProductPage(
-                  productId: state.params['productId']!,
-                  product: state.extra as Product);
-            }
-          },
-        )
-      ],
-    ),
-  ],
-);
-
-class App extends StatelessWidget {
-  const App({super.key});
-
+class MyApp extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AppState(),
-      child: MaterialApp.router(
-        title: 'Stylish',
-        routerConfig: _router,
-      ),
-    );
-  }
+  _MyAppState createState() => _MyAppState();
 }
 
-class AppState extends ChangeNotifier {}
+class _MyAppState extends State<MyApp> {
+  late ARKitController arkitController;
+
+  @override
+  void dispose() {
+    arkitController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+      appBar: AppBar(title: const Text('ARKit in Flutter')),
+      body: ARKitSceneView(onARKitViewCreated: onARKitViewCreated));
+
+  void onARKitViewCreated(ARKitController arkitController) {
+    this.arkitController = arkitController;
+    final node = ARKitNode(
+        geometry: ARKitSphere(radius: 0.1), position: Vector3(0, 0, -0.5));
+    this.arkitController.add(node);
+  }
+}
